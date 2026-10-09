@@ -53,4 +53,9 @@ defmodule Lista do
       [{x, y} | zip(xs, ys)]
     end
 
+    def apply_all([], x), do: []
+    def apply_all([f | fs], x) do
+      [f.(x) |  apply_all(fs,x)]
+    end
+
 end
