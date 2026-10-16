@@ -41,4 +41,28 @@ defmodule Ejercicios do
       end
     end
 
+    # Devuelve el numero de veces que f se evalua a true
+    def count([], _), do: 0
+    def count([x | xs], f) do
+      if f.(x) do
+        1 + count(xs, f)
+      else
+        count(xs, f)
+      end
+    end
+
+    # Ejercicios.count([1,2,3,4], fn x -> x >= 1 end)
+    # Ejercicios.count([1,2,3,4], fn x -> rem(x,2) == 1 end)
+    # Ejercicios.count([{1,2},{4,3},{7,5}], fn {x,y} -> x >= y end)
+    # Ejercicios.count(["hola", "adios", "high"], fn str -> String.starts_with?(str,"h") end)
+
+    def all?([], _), do: true
+    def all?([x | xs], f) do
+      if f.(x), do: all?(xs, f), else: false
+    end
+
+    def any?([], _), do: false
+    def any?([x | xs], f) do
+      if not f.(x), do: any?(xs, f), else: true
+    end
 end
