@@ -132,13 +132,15 @@ defmodule Ejercicios do
     def insertar_ord([y | ys], x) do
       cond do
         x <= y -> [x, y | ys]
-        x > y -> [y] ++ insertar_ord(ys, x)
+        x > y -> [y | insertar_ord(ys, x)]
       end
     end
 
     # PENDIENTE
-    def insert_ord(xs) do
-
+    def insert_ord([]), do: []
+    def insert_ord([x | xs]) do
+      lista_ord = insert_ord(xs)
+      insertar_ord(lista_ord, x)
     end
 
     # 12. Quicksort
@@ -292,6 +294,17 @@ defmodule Ejercicios do
     def drop_while([], f), do: []
     def drop_while([x | xs], f) do
       if f.(x), do: drop_while(xs, f), else: [x | xs]
+    end
+
+    def drop_while2([], _), do: []
+    def drop_while2(xs, f) do
+      Enum.reduce_while(xs, xs, fn x, acc ->
+        if f.(x) do
+          {:cont, tl(acc)}
+        else
+          {:halt, acc}
+        end
+      end)
     end
 
     def split_while(xs, f), do: {take_while(xs,f), drop_while(xs, f)}
