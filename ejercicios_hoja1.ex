@@ -309,3 +309,75 @@ defmodule Ejercicios do
 
     def split_while(xs, f), do: {take_while(xs,f), drop_while(xs, f)}
 end
+
+defmodule Nodo do
+    defstruct [iz: :vacio,val: :nil,der: :vacio]
+end
+
+defmodule Arbol do
+  def arbol_ejemplo() do
+    %Nodo{
+      val: 3,
+      iz: %Nodo{val: 2},
+      der: %Nodo{val: 1}
+    }
+  end
+
+ # def suma(:vacio), do: 0
+  #def suma(%Nodo{iz: iz, val: val, der: der}) do
+   # suma(iz) + val + suma(der)
+  #end
+
+  def mapArbol(:vacio, _), do: :vacio
+  def mapArbol(%Nodo{iz: iz, val: val, der: der}, f) do
+    %Nodo{
+      iz: mapArbol(iz,f),
+      val: f.(val),
+      der: mapArbol(der,f)}
+  end
+
+  def reduce(:vacio, ac, _), do: ac
+  def reduce(%Nodo{iz: iz, val: val, der: der}, ac, f) do
+    acc_iz = reduce(iz, ac, f)
+    acc_der = reduce(der, ac, f)
+    f.(val, acc_iz, acc_der)
+  end
+
+  def suma(t) do
+    reduce(t, 0, fn x, n_iz, n_der -> x + n_iz + n_der end)
+  end
+
+  def altura(t) do
+    reduce(t, 0, fn _, h_iz, h_der ->
+      1 + max(h_iz, h_der)
+    end)
+  end
+  # File.read("info.json")
+end
+
+defmodule LeerJSON do
+  def leer_tercera_persona() do
+    case File.read("info.json") do
+      {:ok, str} ->
+        case JSON.decode(str) do
+          {:ok, lista} ->
+            case lista do
+              [_, _, tercero | _] -> tercero
+              _ -> IO.puts("El JSON no tiene una lista válida")
+            end
+          {:error, _} -> IO.puts("No es un JSON válido")
+        end
+      {:error, _} -> IO.puts("Fallo en la lectura")
+    end
+  end
+
+   def leer_tercera_persona_with() do
+    with {:ok, str} <- File.read("info.json"),
+         {:ok, lista} <- JSON.decode(str),
+         [_, _, tercero | _] <- lista do
+           tercero
+    else
+      {:error, :enoent} -> {:error, :file_not_found}
+    end
+  end
+end
