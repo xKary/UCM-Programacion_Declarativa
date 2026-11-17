@@ -10,3 +10,7 @@ Evaluación perezosa y streams
 
 Slides: https://manuelmontenegro.github.io/PDAP-2026-27/Tema1.html#/title-slide
 Código fuente ejemplos: https://github.com/manuelmontenegro/PDAP-2026-27/tree/main/Tema1
+
+## Tema 2
+Programación funcional en Java
+Slides: https://manuelmontenegro.github.io/PDAP-2026-27/Tema2.html#/title-slide
