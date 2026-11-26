@@ -221,4 +221,17 @@ defmodule Robot do
     |> Enum.sum()
   end
 
+  # Ejercicio 28
+  def ternas(n) do
+    for a <- 1..n, b <- a..n, c <- 1..n, a * a + b * b == c * c do
+      {a, b, c}
+    end
+  end
+
+  # Ejercicio 29
+  def comb(i, j) when j == 1 or j == i, do: 1
+  def comb(i, j) when j > 1 and j < i do
+    comb(i - 1, j - 1) + comb(i - 1, j)
+  end
+
 end
